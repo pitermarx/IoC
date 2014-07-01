@@ -46,7 +46,7 @@ var sameAsMyObject2 = container.Get<IMyAwesomeObject>();
 
 // will throw KeyNotFoundException
 container.Get<IMyAwesomeObject>("SomethingNotRegistered"); 
-container.Get<MyAwesomeObject3>("SomethingNotRegistered"); 
+container.Get<MyAwesomeObject3>(); 
 ```
 
 [![Build status](https://ci.appveyor.com/api/projects/status/iarf25yo0iogy9c7)](https://ci.appveyor.com/project/pitermarx/ioc)
