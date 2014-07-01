@@ -1,6 +1,6 @@
 ﻿### [_IoC_](http://pitermarx.github.io/IoC)
 
-_A simple Inversion of Control Container_
+_A simple Inversion of Control Container_.
 The instance resolution is made by Type and by name.
 
 #### Project Setup
