@@ -29,36 +29,62 @@
       </header>
       <section>
         <h3>
-<a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>Welcome to GitHub Pages.</h3>
+<a name="ioc" class="anchor" href="#ioc"><span class="octicon octicon-link"></span></a><a href="http://pitermarx.github.io/IoC"><em>IoC</em></a>
+</h3>
 
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
+<p><em>A simple Inversion of Control Container</em>
+The instance resolution is made by Type and by name.</p>
 
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
-</code></pre>
+<h4>
+<a name="project-setup" class="anchor" href="#project-setup"><span class="octicon octicon-link"></span></a>Project Setup</h4>
 
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
+<p><em>Includes a solution with a test project and two classes: IoC.Factory and IoC.Container</em> </p>
 
-<h3>
-<a name="designer-templates" class="anchor" href="#designer-templates"><span class="octicon octicon-link"></span></a>Designer Templates</h3>
+<h4>
+<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h4>
 
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
+<p>The content of this project itself is licensed under the
+<a href="http://creativecommons.org/licenses/by/3.0/us/deed.en_US">Creative Commons Attribution 3.0 license</a>,
+and the underlying source code used to format and display that content
+is licensed under the <a href="http://opensource.org/licenses/mit-license.php">MIT license</a>.</p>
 
-<h3>
-<a name="rather-drive-stick" class="anchor" href="#rather-drive-stick"><span class="octicon octicon-link"></span></a>Rather Drive Stick?</h3>
+<h4>
+<a name="example" class="anchor" href="#example"><span class="octicon octicon-link"></span></a>Example</h4>
 
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
+<div class="highlight highlight-cs"><pre><span class="c1">// if doesn't exist, create one</span>
+<span class="kt">var</span> <span class="n">container</span> <span class="p">=</span> <span class="n">Factory</span><span class="p">.</span><span class="n">GetContainer</span><span class="p">(</span><span class="s">"TestContainer"</span><span class="p">);</span>
 
-<h3>
-<a name="authors-and-contributors" class="anchor" href="#authors-and-contributors"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
+<span class="c1">// register as instanciator</span>
+<span class="n">container</span><span class="p">.</span><span class="n">Register</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="k">new</span> <span class="n">MyAwesomeObject</span><span class="p">());</span>
 
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
+<span class="c1">// register as a named instanciator</span>
+<span class="n">container</span><span class="p">.</span><span class="n">Register</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="k">new</span> <span class="n">MyAwesomeObject2</span><span class="p">(),</span> <span class="s">"MySpecialObject2"</span><span class="p">);</span>
 
-<h3>
-<a name="support-or-contact" class="anchor" href="#support-or-contact"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
+<span class="c1">// register as singleton</span>
+<span class="kt">var</span> <span class="n">myObject</span> <span class="p">=</span> <span class="k">new</span> <span class="n">MyAwesomeObject</span><span class="p">();</span>
+<span class="n">container</span><span class="p">.</span><span class="n">Register</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="n">myObject</span><span class="p">,</span> <span class="s">"MyAwesomeSingleton"</span><span class="p">);</span>
 
-<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
+<span class="c1">// you may register a type by interface</span>
+<span class="kt">var</span> <span class="n">myObject2</span> <span class="p">=</span> <span class="k">new</span> <span class="n">MyAwesomeObject</span><span class="p">();</span>
+<span class="n">container</span><span class="p">.</span><span class="n">Register</span><span class="p">&lt;</span><span class="n">IMyAwesomeObject</span><span class="p">&gt;(()</span> <span class="p">=&gt;</span> <span class="n">myObject2</span><span class="p">);</span>
+
+<span class="c1">// Seal the container to prevent further registers</span>
+<span class="c1">// any register will throw after this</span>
+<span class="n">container</span><span class="p">.</span><span class="n">Seal</span><span class="p">();</span>
+
+<span class="c1">// get the registers</span>
+<span class="c1">// the resolution is first by type and then by name</span>
+<span class="kt">var</span> <span class="n">newAwesomeObject</span> <span class="p">=</span> <span class="n">container</span><span class="p">.</span><span class="n">Get</span><span class="p">&lt;</span><span class="n">MyAwesomeObject</span><span class="p">&gt;();</span>
+<span class="kt">var</span> <span class="n">newAwesomeObject2</span> <span class="p">=</span> <span class="n">container</span><span class="p">.</span><span class="n">Get</span><span class="p">&lt;</span><span class="n">MyAwesomeObject2</span><span class="p">&gt;(</span><span class="s">"MySpecialObject2"</span><span class="p">);</span>
+<span class="kt">var</span> <span class="n">sameAsMyObject</span> <span class="p">=</span> <span class="n">container</span><span class="p">.</span><span class="n">Get</span><span class="p">&lt;</span><span class="n">MyAwesomeObject</span><span class="p">&gt;(</span><span class="s">"MyAwesomeSingleton"</span><span class="p">);</span>
+<span class="kt">var</span> <span class="n">sameAsMyObject2</span> <span class="p">=</span> <span class="n">container</span><span class="p">.</span><span class="n">Get</span><span class="p">&lt;</span><span class="n">IMyAwesomeObject</span><span class="p">&gt;();</span>
+
+<span class="c1">// will throw KeyNotFoundException</span>
+<span class="n">container</span><span class="p">.</span><span class="n">Get</span><span class="p">&lt;</span><span class="n">IMyAwesomeObject</span><span class="p">&gt;(</span><span class="s">"SomethingNotRegistered"</span><span class="p">);</span> 
+<span class="n">container</span><span class="p">.</span><span class="n">Get</span><span class="p">&lt;</span><span class="n">MyAwesomeObject3</span><span class="p">&gt;();</span> 
+</pre></div>
+
+<p><a href="https://ci.appveyor.com/project/pitermarx/ioc"><img src="https://ci.appveyor.com/api/projects/status/iarf25yo0iogy9c7" alt="Build status"></a></p>
       </section>
       <footer>
         <p>This project is maintained by <a href="https://github.com/pitermarx">pitermarx</a></p>
